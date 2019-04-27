@@ -1,0 +1,31 @@
+{
+  "inc": [
+    {
+      "title": "Salary",
+      "period": "monthly",
+      "value": 1200
+    },
+    {
+      "title": "Interest",
+      "period": "monthly",
+      "value": 30
+    }
+  ],
+  "out": [
+    {
+      "title": "Rent",
+      "period": "monthly",
+      "value": 550
+    },
+    {
+      "title": "Life insurance",
+      "period": "annual",
+      "value": 350
+    },
+    {
+      "title": "Internet",
+      "period": "monthly",
+      "value": 24
+    }
+  ]
+}
