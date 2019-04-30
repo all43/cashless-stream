@@ -1,31 +1,49 @@
 {
+  "initialBalance": 1050,
   "inc": [
     {
       "title": "Salary",
       "period": "monthly",
-      "value": 1200
+      "value": 1200,
+      "type": "live"
     },
     {
       "title": "Interest",
       "period": "monthly",
-      "value": 30
+      "value": 30,
+      "type": "live"
     }
   ],
   "out": [
     {
       "title": "Rent",
       "period": "monthly",
-      "value": 550
+      "value": 550,
+      "type": "live"
     },
     {
       "title": "Life insurance",
       "period": "annual",
-      "value": 350
+      "value": 350,
+      "type": "bridged"
+    },
+    {
+      "title": "Utilities",
+      "period": "monthly",
+      "value": 150,
+      "type": "projected"
+    },
+    {
+      "title": "Groceries",
+      "period": "monthly",
+      "value": 300,
+      "type": "projected"
     },
     {
       "title": "Internet",
       "period": "monthly",
-      "value": 24
+      "value": 24,
+      "type": "live"
     }
   ]
 }

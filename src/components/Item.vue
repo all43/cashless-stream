@@ -1,7 +1,7 @@
 <template>
 	<div class="item">
   		<p>{{ item.title }}</p>
-  		<p class="amount">{{ finalValue }}</p>
+  		<p class="amount">{{ finalValue | formatCurrency }}</p>
   	</div>
 </template>
 
