@@ -1,0 +1,111 @@
+import type { Account } from '../lib/types'
+
+export const defaultAccount: Account = {
+  name: 'Default',
+  initialBalance: 2400,
+  currency: 'EUR',
+  streams: [
+    // ── Income ───────────────────────────────────────────────────────────────
+    {
+      id: 'salary',
+      title: 'Salary',
+      period: 'monthly',
+      value: 2800,
+      type: 'live',
+      category: 'income',
+      icon: '💼',
+    },
+    {
+      id: 'freelance',
+      title: 'Freelance',
+      period: 'monthly',
+      value: 400,
+      type: 'projected',
+      category: 'income',
+      icon: '💻',
+    },
+
+    // ── Expenses: manual ─────────────────────────────────────────────────────
+    {
+      id: 'rent',
+      title: 'Rent',
+      period: 'monthly',
+      value: 950,
+      type: 'live',
+      category: 'expense',
+      icon: '🏠',
+    },
+    {
+      id: 'groceries',
+      title: 'Groceries',
+      period: 'monthly',
+      value: 280,
+      type: 'projected',
+      category: 'expense',
+      icon: '🛒',
+    },
+
+    // ── Expenses: marketplace ────────────────────────────────────────────────
+    {
+      id: 'def-smartphone',
+      title: 'Smartphone (Flagship)',
+      period: 'monthly',
+      value: 23.44,
+      type: 'live',
+      category: 'expense',
+      icon: '📱',
+      sourceProductId: 'smartphone',
+    },
+    {
+      id: 'def-music',
+      title: 'Music Streaming',
+      period: 'monthly',
+      value: 9.99,
+      type: 'live',
+      category: 'expense',
+      icon: '🎵',
+      sourceProductId: 'streaming-music',
+    },
+    {
+      id: 'def-cloud',
+      title: 'Cloud Storage (200 GB)',
+      period: 'monthly',
+      value: 2.99,
+      type: 'live',
+      category: 'expense',
+      icon: '☁️',
+      sourceProductId: 'cloud-storage',
+    },
+    {
+      id: 'def-gym',
+      title: 'Gym Membership',
+      period: 'monthly',
+      value: 29.99,
+      type: 'live',
+      category: 'expense',
+      icon: '🏋️',
+      sourceProductId: 'gym',
+      contract: {
+        startDate: '2025-10-01',
+        minimumMonths: 12,
+        cancellationModel: 'flat',
+        cancellationFee: 50,
+      },
+    },
+    {
+      id: 'def-transit',
+      title: 'Transit Pass',
+      period: 'monthly',
+      value: 49,
+      type: 'live',
+      category: 'expense',
+      icon: '🚌',
+      sourceProductId: 'transit-pass',
+      contract: {
+        startDate: '2025-09-01',
+        minimumMonths: 12,
+        cancellationModel: 'remaining-months',
+      },
+    },
+  ],
+}

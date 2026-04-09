@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-surface: #0a0a0f;
+  --color-surface-light: #ffffff;
+  --color-surface-card: #12121a;
+  --color-surface-card-light: #f8f9fa;
+  --color-surface-elevated: #1a1a25;
+  --color-surface-elevated-light: #f0f1f3;
+
+  --color-income: #34d399;
+  --color-income-dim: #065f46;
+  --color-expense: #fb7185;
+  --color-expense-dim: #881337;
+  --color-balance-positive: #7dd3fc;
+  --color-balance-negative: #fbbf24;
+
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-border: #1e293b;
+  --color-border-light: #e2e8f0;
+
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/jetbrainsmono/v18/tDbY2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKxTOlOV.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
+}
+
+html {
+  font-family: var(--font-sans);
+}
+
+html.dark {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+html:not(.dark) {
+  background-color: var(--color-surface-light);
+  color: #1e293b;
+}
+
+body {
+  margin: 0;
+}
+
+@keyframes shimmer-ltr {
+  0%   { transform: translateX(-150%); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(350%); opacity: 0; }
+}
+
+@keyframes shimmer-rtl {
+  0%   { transform: translateX(350%); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(-150%); opacity: 0; }
+}
