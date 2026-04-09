@@ -2,7 +2,7 @@
 
 > What if money never arrived — it just flowed?
 
-**[→ Live demo](https://cashless-stream.pages.dev)**
+**[→ Live demo](https://demo.cashless.stream)**
 
 A concept demo exploring what a world of **continuous money streams** could look like. Instead of discrete payments — a salary deposited once a month, rent debited on the 1st, a loan repaid in instalments — imagine every financial obligation as a per-second stream, always running, always balanced.
 
