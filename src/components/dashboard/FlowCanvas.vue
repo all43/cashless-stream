@@ -32,6 +32,10 @@ interface Particle {
   streamId: string | null
 }
 
+const isEmpty = computed(
+  () => store.incomeStreams.length === 0 && store.expenseStreams.length === 0,
+)
+
 const incomeRate = computed(() =>
   totalStreams(store.incomeStreams, 'everySecond', store.account.currency).amount,
 )
@@ -117,16 +121,18 @@ function animate() {
   ctx.setLineDash([])
 
   // Accumulator spawn — ratio exactly tracks income/expense ratio
-  incomeAcc += incomeRatio * SPAWN_RATE
-  expenseAcc += expenseRatio * SPAWN_RATE
+  if (!isEmpty.value) {
+    incomeAcc += incomeRatio * SPAWN_RATE
+    expenseAcc += expenseRatio * SPAWN_RATE
 
-  while (incomeAcc >= 1) {
-    incomeAcc -= 1
-    spawnParticle('income', weightedRandom(store.incomeStreams))
-  }
-  while (expenseAcc >= 1) {
-    expenseAcc -= 1
-    spawnParticle('expense', weightedRandom(store.expenseStreams))
+    while (incomeAcc >= 1) {
+      incomeAcc -= 1
+      spawnParticle('income', weightedRandom(store.incomeStreams))
+    }
+    while (expenseAcc >= 1) {
+      expenseAcc -= 1
+      spawnParticle('expense', weightedRandom(store.expenseStreams))
+    }
   }
 
   // Update and draw
@@ -217,7 +223,15 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="rounded-xl border dark:border-border dark:bg-surface-card border-slate-200 bg-white overflow-hidden">
+  <div class="rounded-xl border dark:border-border dark:bg-surface-card border-slate-200 bg-white overflow-hidden relative">
     <canvas ref="canvasRef" class="w-full h-40" />
+    <div
+      v-if="isEmpty"
+      class="absolute inset-0 flex items-center justify-center"
+    >
+      <p class="text-xs dark:text-text-muted text-slate-400">
+        Add income and expense streams to see the flow
+      </p>
+    </div>
   </div>
 </template>

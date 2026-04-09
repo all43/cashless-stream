@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useStreamStore } from '../../stores/streams'
 import { totalStreams } from '../../lib/calc'
 import { effectiveTaxRate, taxForPeriod } from '../../lib/tax'
@@ -7,6 +7,7 @@ import AnimatedNumber from '../shared/AnimatedNumber.vue'
 import { formatCurrency } from '../../composables/useCurrency'
 
 const store = useStreamStore()
+const showInfo = ref(false)
 
 const annualIncome = computed(() =>
   totalStreams(store.incomeStreams, 'annual', store.account.currency).amount,
@@ -37,15 +38,26 @@ const netIncome = computed(() => ({
   precision: store.totalIncome.precision,
   currency: store.account.currency,
 }))
+
+const isEmpty = computed(() => store.incomeStreams.length === 0)
 </script>
 
 <template>
-  <div class="rounded-xl border dark:border-border dark:bg-surface-card border-slate-200 bg-white p-4">
-    <h3 class="text-xs font-semibold uppercase tracking-wider mb-3 dark:text-text-secondary text-slate-500">
-      Tax flow (simplified)
+  <div
+    class="rounded-xl border dark:border-border dark:bg-surface-card border-slate-200 bg-white p-4 cursor-pointer transition-colors
+           dark:hover:border-border/80 hover:border-slate-300"
+    @click="showInfo = true"
+  >
+    <h3 class="text-xs font-semibold uppercase tracking-wider mb-3 dark:text-text-secondary text-slate-500 flex items-center justify-between">
+      Tax flow (concept)
+      <span class="text-[10px] normal-case font-normal dark:text-text-muted text-slate-400">how?</span>
     </h3>
 
-    <div class="space-y-2">
+    <p v-if="isEmpty" class="text-xs dark:text-text-muted text-slate-400">
+      Add income streams to see tax flow
+    </p>
+
+    <div v-else class="space-y-2">
       <div v-if="hasLuxury" class="flex items-center justify-between">
         <span class="text-sm dark:text-text-secondary text-slate-600">Luxury (non-deductible)</span>
         <AnimatedNumber
@@ -87,4 +99,58 @@ const netIncome = computed(() => ({
       </div>
     </div>
   </div>
+
+  <!-- Info modal -->
+  <Teleport to="body">
+    <div
+      v-if="showInfo"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      @click.self="showInfo = false"
+    >
+      <div class="w-full max-w-sm rounded-xl border p-6 space-y-4
+                  dark:border-border dark:bg-surface-elevated
+                  border-slate-200 bg-white">
+
+        <div>
+          <h2 class="text-sm font-semibold dark:text-text-primary text-slate-900">
+            How tax is calculated
+          </h2>
+          <p class="mt-0.5 text-xs dark:text-text-muted text-slate-500">
+            Tax flow (concept) — not real tax advice
+          </p>
+        </div>
+
+        <p class="text-sm leading-relaxed dark:text-text-secondary text-slate-600">
+          <strong>Only the income you don't spend gets taxed.</strong>
+        </p>
+
+        <p class="text-sm leading-relaxed dark:text-text-secondary text-slate-600">
+          Expenses that serve a real purpose — rent, transport, subscriptions — are deducted
+          before tax is applied. What's left is taxable income. This is a thought experiment,
+          not a tax calculator: income is taxed progressively, and expenses that serve a real
+          purpose reduce what you owe. Luxury spending does not.
+        </p>
+
+        <p class="text-sm leading-relaxed dark:text-text-secondary text-slate-600">
+          The <strong>effective rate</strong> is the share of total income that actually goes
+          to tax — lower than the top rate because progressively higher rates only apply to
+          the income above each threshold.
+        </p>
+
+        <p class="text-[11px] dark:text-text-muted text-slate-400 leading-snug">
+          Rates are invented. This does not reflect any real tax system and has no bearing on
+          actual financial or legal obligations.
+        </p>
+
+        <button
+          @click="showInfo = false"
+          class="w-full rounded-lg px-4 py-2 text-xs font-medium transition-colors border
+                 dark:border-border dark:text-text-secondary dark:hover:bg-surface-card
+                 border-slate-200 text-slate-600 hover:bg-slate-50"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </Teleport>
 </template>

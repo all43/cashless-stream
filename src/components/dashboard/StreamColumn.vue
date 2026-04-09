@@ -11,6 +11,7 @@ const props = defineProps<{
   total: MoneyResult
   category: StreamCategory
   hoveredId?: string | null
+  highlightedId?: string | null
 }>()
 
 const emit = defineEmits<{
@@ -55,6 +56,7 @@ const accentColor = computed(() =>
         :key="stream.id"
         :stream="stream"
         :hovered-id="hoveredId"
+        :highlighted-id="highlightedId"
         @edit="emit('edit', $event)"
         @hover="emit('hover', $event)"
       />

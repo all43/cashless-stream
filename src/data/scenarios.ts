@@ -156,5 +156,13 @@ export const alternativeScenarios: Account[] = [
   },
 ]
 
+// Blank — empty canvas for custom input
+export const blankScenario: Account = {
+  name: 'Custom',
+  initialBalance: 0,
+  currency: 'EUR',
+  streams: [],
+}
+
 // Combined for store.loadScenario() lookup
-export const scenarios: Account[] = [...featuredScenarios, ...moreScenarios, ...alternativeScenarios]
+export const scenarios: Account[] = [blankScenario, ...featuredScenarios, ...moreScenarios, ...alternativeScenarios]

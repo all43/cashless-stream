@@ -11,6 +11,7 @@ import ContractBadge from '../shared/ContractBadge.vue'
 const props = defineProps<{
   stream: Stream
   hoveredId?: string | null
+  highlightedId?: string | null
 }>()
 
 const emit = defineEmits<{
@@ -31,6 +32,7 @@ const annualHint = computed(() => {
 })
 
 const isHovered = computed(() => props.hoveredId === props.stream.id)
+const isHighlighted = computed(() => props.highlightedId === props.stream.id)
 
 const shimmerDelay = computed(() => {
   const hash = props.stream.id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
@@ -50,9 +52,13 @@ const proportion = computed(() => {
 
 <template>
   <div
+    :id="'stream-' + stream.id"
     class="group relative overflow-hidden flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 transition-all cursor-pointer
            dark:hover:bg-white/5 hover:bg-slate-50"
-    :class="{ 'dark:!bg-white/10 !bg-slate-100': isHovered }"
+    :class="{
+      'dark:!bg-white/10 !bg-slate-100': isHovered,
+      'stream-highlight': isHighlighted,
+    }"
     @mouseenter="emit('hover', stream.id)"
     @mouseleave="emit('hover', null)"
     @click="emit('edit', stream)"

@@ -45,11 +45,11 @@ export const PERIOD_LABELS: Record<Period, string> = {
   everySecond: 'Second',
 }
 
-// Simplified German/EU-style progressive tax brackets (on annual income)
+// Illustrative progressive tax brackets — not based on any real jurisdiction
 export const TAX_BRACKETS: TaxBracket[] = [
-  { min: 0, max: 11604, rate: 0 },
-  { min: 11604, max: 17005, rate: 0.14 },
-  { min: 17005, max: 66760, rate: 0.24 },
-  { min: 66760, max: 277825, rate: 0.42 },
-  { min: 277825, max: null, rate: 0.45 },
+  { min: 0,      max: 12000,  rate: 0    },
+  { min: 12000,  max: 30000,  rate: 0.15 },
+  { min: 30000,  max: 75000,  rate: 0.25 },
+  { min: 75000,  max: 200000, rate: 0.35 },
+  { min: 200000, max: null,   rate: 0.45 },
 ]

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useStreamStore } from '../stores/streams'
 import { products } from '../data/marketplace-products'
 import ProductCard from '../components/marketplace/ProductCard.vue'
@@ -10,6 +10,19 @@ import type { Product, ContractTerms } from '../lib/types'
 
 const store = useStreamStore()
 const router = useRouter()
+const route = useRoute()
+const highlightedProductId = ref<string | null>(null)
+
+onMounted(() => {
+  const id = route.query.highlight as string | undefined
+  if (!id) return
+  history.replaceState(null, '', route.path)
+  setTimeout(() => {
+    highlightedProductId.value = id
+    document.getElementById('product-' + id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    setTimeout(() => { highlightedProductId.value = null }, 2500)
+  }, 250)
+})
 
 type PendingContract = { kind: 'contract'; product: Product; monthlyValue: number; contract: ContractTerms }
 type PendingSimple = { kind: 'simple'; product: Product; monthlyValue: number }
@@ -31,7 +44,7 @@ function handleAddToStreams(product: Product, monthlyValue: number) {
 }
 
 function commitStream(product: Product, monthlyValue: number, contract?: ContractTerms) {
-  store.addStream({
+  const id = store.addStream({
     title: product.name,
     value: monthlyValue,
     period: 'monthly',
@@ -41,7 +54,7 @@ function commitStream(product: Product, monthlyValue: number, contract?: Contrac
     sourceProductId: product.id,
     ...(contract ? { contract } : {}),
   })
-  router.push('/dashboard')
+  router.push({ path: '/dashboard', query: { highlight: id } })
 }
 
 function handleConfirm() {
@@ -81,9 +94,14 @@ const CATEGORY_META: Record<string, { label: string; description: string }> = {
   },
 }
 
-const addedProductIds = computed(
-  () => new Set(store.account.streams.map((s) => s.sourceProductId).filter(Boolean)),
-)
+/** Map from sourceProductId → stream id, for already-added products */
+const addedStreamIds = computed(() => {
+  const map = new Map<string, string>()
+  for (const s of store.account.streams) {
+    if (s.sourceProductId) map.set(s.sourceProductId, s.id)
+  }
+  return map
+})
 
 const categories = [...new Set(products.map((p) => p.category))]
 </script>
@@ -137,7 +155,8 @@ const categories = [...new Set(products.map((p) => p.category))]
           v-for="product in products.filter(p => p.category === cat)"
           :key="product.id"
           :product="product"
-          :is-added="addedProductIds.has(product.id)"
+          :added-stream-id="addedStreamIds.get(product.id)"
+          :highlighted-id="highlightedProductId"
           @add-to-streams="handleAddToStreams"
         />
       </div>

@@ -37,6 +37,9 @@ const accumulatedBalance = computed(() => ({
 }))
 
 const isPositive = computed(() => accumulatedBalance.value.amount >= 0)
+const isEmpty = computed(
+  () => store.incomeStreams.length === 0 && store.expenseStreams.length === 0,
+)
 </script>
 
 <template>
@@ -45,21 +48,28 @@ const isPositive = computed(() => accumulatedBalance.value.amount >= 0)
       <h3 class="text-xs font-semibold uppercase tracking-wider dark:text-text-secondary text-slate-500">
         Since you opened this page
       </h3>
-      <span class="text-[10px] font-mono dark:text-text-muted text-slate-500">
+      <span v-if="!isEmpty" class="text-[10px] font-mono dark:text-text-muted text-slate-500">
         {{ (elapsed / 1000).toFixed(1) }}s
       </span>
     </div>
 
-    <!-- Accumulated balance — the hero -->
-    <div class="font-mono text-2xl font-bold tabular-nums"
-         :class="isPositive ? 'text-income' : 'text-expense'">
-      {{ formatCurrency(accumulatedBalance) }}
-    </div>
+    <template v-if="isEmpty">
+      <p class="text-xs dark:text-text-muted text-slate-400 mt-4">
+        Waiting for streams…
+      </p>
+    </template>
+    <template v-else>
+      <!-- Accumulated balance — the hero -->
+      <div class="font-mono text-2xl font-bold tabular-nums"
+           :class="isPositive ? 'text-income' : 'text-expense'">
+        {{ formatCurrency(accumulatedBalance) }}
+      </div>
 
-    <!-- Secondary: earned vs spent -->
-    <div class="mt-2 flex gap-4 text-[11px] font-mono tabular-nums">
-      <span class="text-income">+{{ formatCurrency(accumulatedIncome) }} earned</span>
-      <span class="text-expense">−{{ formatCurrency(accumulatedExpense) }} spent</span>
-    </div>
+      <!-- Secondary: earned vs spent -->
+      <div class="mt-2 flex gap-4 text-[11px] font-mono tabular-nums">
+        <span class="text-income">+{{ formatCurrency(accumulatedIncome) }} earned</span>
+        <span class="text-expense">−{{ formatCurrency(accumulatedExpense) }} spent</span>
+      </div>
+    </template>
   </div>
 </template>

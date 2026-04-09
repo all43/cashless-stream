@@ -4,6 +4,18 @@ import type { Account, Period, Stream, StreamCategory } from '../lib/types'
 import { defaultAccount } from '../data/default-account'
 import { scenarios } from '../data/scenarios'
 import { totalStreams } from '../lib/calc'
+import { products } from '../data/marketplace-products'
+
+const productByName = new Map(products.map((p) => [p.name, p.id]))
+
+function migrateAccount(acc: Account): Account {
+  const streams = acc.streams.map((s) => {
+    if (s.sourceProductId) return s
+    const productId = productByName.get(s.title)
+    return productId ? { ...s, sourceProductId: productId } : s
+  })
+  return { ...acc, streams }
+}
 
 export const useStreamStore = defineStore(
   'streams',
@@ -53,9 +65,10 @@ export const useStreamStore = defineStore(
       currency: account.value.currency,
     }))
 
-    function addStream(stream: Omit<Stream, 'id'>) {
+    function addStream(stream: Omit<Stream, 'id'>): string {
       const id = `stream-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`
       account.value.streams.push({ ...stream, id })
+      return id
     }
 
     function updateStream(id: string, updates: Partial<Stream>) {
@@ -111,6 +124,9 @@ export const useStreamStore = defineStore(
   {
     persist: {
       pick: ['account', 'showProjections', 'showVisualization'],
+      afterHydrate(ctx) {
+        ctx.store.account = migrateAccount(ctx.store.account as Account)
+      },
     },
   },
 )

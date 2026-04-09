@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useStreamStore } from '../stores/streams'
-import { featuredScenarios, moreScenarios, alternativeScenarios } from '../data/scenarios'
+import { blankScenario, featuredScenarios, moreScenarios, alternativeScenarios } from '../data/scenarios'
 import PeriodSelector from '../components/dashboard/PeriodSelector.vue'
 import StreamColumn from '../components/dashboard/StreamColumn.vue'
 import BalanceRow from '../components/dashboard/BalanceRow.vue'
@@ -18,7 +19,21 @@ import { isLocked } from '../lib/contract'
 import { products } from '../data/marketplace-products'
 
 const store = useStreamStore()
+const route = useRoute()
+const router = useRouter()
 const hoveredStreamId = ref<string | null>(null)
+const highlightedId = ref<string | null>(null)
+
+onMounted(() => {
+  const id = route.query.highlight as string | undefined
+  if (!id) return
+  history.replaceState(null, '', route.path)
+  setTimeout(() => {
+    highlightedId.value = id
+    document.getElementById('stream-' + id)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    setTimeout(() => { highlightedId.value = null }, 2500)
+  }, 250)
+})
 
 // Form state
 const showForm = ref(false)
@@ -100,6 +115,12 @@ function handleCancel() {
   showForm.value = false
   editingStream.value = null
 }
+
+function handleGoToProduct(productId: string) {
+  showForm.value = false
+  editingStream.value = null
+  router.push({ path: '/marketplace', query: { highlight: productId } })
+}
 </script>
 
 <template>
@@ -112,15 +133,14 @@ function handleCancel() {
       <div class="flex items-center gap-4">
         <!-- Scenario selector -->
         <select
-          :value="store.account.name"
+          value=""
           @change="store.loadScenario(($event.target as HTMLSelectElement).value)"
           class="rounded-md border px-2 py-1 text-xs
                  dark:border-border dark:bg-surface-card dark:text-text-secondary
                  border-slate-300 bg-white text-slate-600"
         >
-          <option :value="store.account.name" disabled>
-            {{ store.account.name }}
-          </option>
+          <option value="" disabled>Switch scenario…</option>
+          <option :value="blankScenario.name">{{ blankScenario.name }}</option>
           <optgroup label="Featured">
             <option v-for="s in featuredScenarios" :key="s.name" :value="s.name">
               {{ s.name }}
@@ -197,6 +217,7 @@ function handleCancel() {
         :total="store.totalIncome"
         category="income"
         :hovered-id="hoveredStreamId"
+        :highlighted-id="highlightedId"
         @edit="handleEdit"
         @add="handleAdd('income')"
         @hover="hoveredStreamId = $event"
@@ -207,6 +228,7 @@ function handleCancel() {
         :total="store.totalExpenses"
         category="expense"
         :hovered-id="hoveredStreamId"
+        :highlighted-id="highlightedId"
         @edit="handleEdit"
         @add="handleAdd('expense')"
         @hover="hoveredStreamId = $event"
@@ -241,6 +263,7 @@ function handleCancel() {
           @cancel="handleCancel"
           @delete="handleDelete"
           @quit="handleQuit"
+          @go-to-product="handleGoToProduct"
         />
       </div>
     </div>
