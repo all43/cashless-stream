@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import ThemeToggle from './ThemeToggle.vue'
+import LogoIcon from './LogoIcon.vue'
 
 const route = useRoute()
 
@@ -20,7 +21,7 @@ const navItems = [
     <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
       <router-link to="/" class="flex items-center gap-2 font-mono text-sm font-bold tracking-tight
                                   dark:text-text-primary text-slate-800">
-        <img src="/favicon.svg" alt="" class="w-6 h-6 rounded-md" />
+        <LogoIcon class="w-6 h-6 rounded-md" />
         cashless-stream
       </router-link>
 
