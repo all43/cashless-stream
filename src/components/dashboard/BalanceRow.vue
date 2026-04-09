@@ -19,7 +19,7 @@ const periodLabel = computed(() => PERIOD_LABELS[store.selectedPeriod].toLowerCa
 
 <template>
   <div
-    class="rounded-xl border px-6 py-5 text-center transition-colors"
+    class="rounded-xl border px-4 sm:px-6 py-5 text-center transition-colors"
     :class="isEmpty
       ? 'dark:border-border dark:bg-surface-card border-slate-200 bg-white'
       : isPositive

@@ -35,7 +35,7 @@ function fmt(amount: number) {
 <template>
   <div class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 bg-black/50">
     <div
-      class="w-full max-w-sm rounded-xl border p-6 space-y-5
+      class="w-full sm:max-w-sm rounded-xl border p-5 sm:p-6 space-y-5
              dark:border-border dark:bg-surface-elevated
              border-slate-200 bg-white"
     >

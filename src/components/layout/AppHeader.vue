@@ -6,7 +6,6 @@ import LogoIcon from './LogoIcon.vue'
 const route = useRoute()
 
 const navItems = [
-  { path: '/', label: 'Home' },
   { path: '/dashboard', label: 'Dashboard' },
   { path: '/marketplace', label: 'Marketplace' },
 ]
@@ -22,7 +21,7 @@ const navItems = [
       <router-link to="/" class="flex items-center gap-2 font-mono text-sm font-bold tracking-tight
                                   dark:text-text-primary text-slate-800">
         <LogoIcon class="w-6 h-6 rounded-md" />
-        cashless-stream
+        <span class="hidden sm:inline">cashless-stream</span>
       </router-link>
 
       <nav class="flex items-center gap-1">

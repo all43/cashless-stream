@@ -343,7 +343,7 @@ onMounted(() => titleInput.value?.focus())
             <!-- Editable contract fields (new stream) -->
             <template v-else-if="!existingContract">
               <div class="flex gap-2 items-center">
-                <label class="text-xs dark:text-text-muted text-slate-500 w-28 shrink-0">Minimum months</label>
+                <label class="text-xs dark:text-text-muted text-slate-500 w-24 shrink-0">Minimum months</label>
                 <input
                   v-model.number="minimumMonths"
                   type="number"
@@ -356,7 +356,7 @@ onMounted(() => titleInput.value?.focus())
               </div>
 
               <div class="flex gap-2 items-center">
-                <label class="text-xs dark:text-text-muted text-slate-500 w-28 shrink-0">Exit penalty</label>
+                <label class="text-xs dark:text-text-muted text-slate-500 w-24 shrink-0">Exit penalty</label>
                 <div class="flex gap-1 flex-1">
                   <button
                     v-for="m in (['flat', 'remaining-months'] as const)"
@@ -376,7 +376,7 @@ onMounted(() => titleInput.value?.focus())
               </div>
 
               <div v-if="cancellationModel === 'flat'" class="flex gap-2 items-center">
-                <label class="text-xs dark:text-text-muted text-slate-500 w-28 shrink-0">Exit fee (€)</label>
+                <label class="text-xs dark:text-text-muted text-slate-500 w-24 shrink-0">Exit fee (€)</label>
                 <div class="relative flex-1">
                   <span class="absolute left-3 top-1/2 -translate-y-1/2 text-xs dark:text-text-muted text-slate-500">&euro;</span>
                   <input

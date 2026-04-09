@@ -127,10 +127,10 @@ function handleGoToProduct(productId: string) {
   <div>
   <div class="mx-auto max-w-5xl px-4 py-8">
     <!-- Controls bar -->
-    <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+    <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
       <PeriodSelector />
 
-      <div class="flex items-center gap-4">
+      <div class="flex flex-wrap items-center gap-3">
         <!-- Scenario selector -->
         <select
           value=""
@@ -255,7 +255,7 @@ function handleGoToProduct(productId: string) {
         class="absolute inset-0 bg-black/40 backdrop-blur-sm"
         @click="handleCancel"
       />
-      <div class="relative z-10 w-full max-w-md">
+      <div class="relative z-10 w-full sm:max-w-md">
         <StreamItemForm
           :stream="editingStream"
           :category="formCategory"

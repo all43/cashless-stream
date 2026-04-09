@@ -107,7 +107,7 @@ const isEmpty = computed(() => store.incomeStreams.length === 0)
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
       @click.self="showInfo = false"
     >
-      <div class="w-full max-w-sm rounded-xl border p-6 space-y-4
+      <div class="w-full sm:max-w-sm rounded-xl border p-6 space-y-4
                   dark:border-border dark:bg-surface-elevated
                   border-slate-200 bg-white">
 

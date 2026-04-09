@@ -97,18 +97,28 @@ const calcDetails = computed(() => {
   >
 
     <!-- Header -->
-    <div class="px-5 pt-5 pb-4">
-      <div class="flex items-start gap-3">
-        <span class="text-3xl leading-none mt-0.5">{{ product.icon }}</span>
+    <div class="px-4 sm:px-5 pt-4 sm:pt-5 pb-3 sm:pb-4">
+      <div class="flex items-center gap-3">
+        <span class="text-2xl sm:text-3xl leading-none shrink-0">{{ product.icon }}</span>
         <div class="flex-1 min-w-0">
           <h3 class="text-sm font-semibold dark:text-text-primary text-slate-800 leading-snug">
             {{ product.name }}
           </h3>
-          <div class="flex items-center gap-1.5 flex-wrap mt-0.5">
-            <span class="text-xs dark:text-text-muted text-slate-500 capitalize">{{ product.category }}</span>
+          <!-- Mobile: show rental/subscription price inline -->
+          <div class="flex items-center gap-2 mt-0.5 sm:hidden">
+            <span class="font-mono text-sm font-bold dark:text-text-primary text-slate-900">
+              {{ formatEuro(isSubscription ? product.price : r2rMonthly) }}
+            </span>
+            <span class="text-[10px] dark:text-text-muted text-slate-400">/mo</span>
+            <button
+              v-if="!isSubscription"
+              class="text-[10px] dark:text-text-muted text-slate-400 underline underline-offset-2"
+              @click.stop="showCalc = true"
+            >how?</button>
           </div>
         </div>
-        <div class="text-right shrink-0">
+        <!-- Desktop: ref price top-right -->
+        <div class="hidden sm:block text-right shrink-0">
           <div class="text-sm font-mono font-semibold dark:text-text-secondary text-slate-600">
             {{ formatEuro(product.price) }}
           </div>
@@ -119,9 +129,9 @@ const calcDetails = computed(() => {
       </div>
     </div>
 
-    <!-- Physical: rental price as hero -->
+    <!-- Physical: rental price hero (desktop only) -->
     <template v-if="!isSubscription">
-      <div class="mx-5 mb-3 rounded-lg px-4 py-4 text-center dark:bg-surface-elevated/40 bg-slate-50">
+      <div class="hidden sm:block mx-5 mb-3 rounded-lg px-4 py-4 text-center dark:bg-surface-elevated/40 bg-slate-50">
         <div class="text-[10px] font-medium uppercase tracking-wider mb-2 dark:text-text-muted text-slate-500">
           Rental
         </div>
@@ -134,7 +144,7 @@ const calcDetails = computed(() => {
       </div>
 
       <button
-        class="mx-5 mb-4 rounded-md px-3 py-2 text-xs text-center w-[calc(100%-2.5rem)] transition-opacity hover:opacity-80"
+        class="hidden sm:block mx-5 mb-4 rounded-md px-3 py-2 text-xs text-center w-[calc(100%-2.5rem)] transition-opacity hover:opacity-80"
         :class="savings > 0.5
           ? 'dark:bg-income/10 bg-emerald-50'
           : 'dark:bg-surface-elevated bg-slate-100'"
@@ -154,9 +164,9 @@ const calcDetails = computed(() => {
       </button>
     </template>
 
-    <!-- Subscription: already a stream -->
+    <!-- Subscription: daily/per-second breakdown (desktop only) -->
     <template v-else>
-      <div class="mx-5 mb-3 rounded-lg dark:bg-surface-elevated/40 bg-slate-50 px-4 py-3">
+      <div class="hidden sm:block mx-5 mb-3 rounded-lg dark:bg-surface-elevated/40 bg-slate-50 px-4 py-3">
         <div class="text-[10px] font-medium uppercase tracking-wider mb-2 dark:text-text-muted text-slate-500">
           Subscription
         </div>
@@ -175,7 +185,7 @@ const calcDetails = computed(() => {
           </div>
         </div>
       </div>
-      <div class="mx-5 mb-4 rounded-md px-3 py-2 text-xs dark:bg-surface-elevated bg-slate-100 text-center">
+      <div class="hidden sm:block mx-5 mb-4 rounded-md px-3 py-2 text-xs dark:bg-surface-elevated bg-slate-100 text-center">
         <span class="dark:text-text-secondary text-slate-600">
           Billed monthly, cancel anytime
         </span>
@@ -183,7 +193,7 @@ const calcDetails = computed(() => {
     </template>
 
     <!-- CTA -->
-    <div class="px-5 pb-5 mt-auto">
+    <div class="px-4 sm:px-5 pb-4 sm:pb-5 mt-auto">
       <button
         v-if="!addedStreamId"
         @click="emit('addToStreams', product, streamMonthly)"
@@ -212,7 +222,7 @@ const calcDetails = computed(() => {
       class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
       @click.self="showCalc = false"
     >
-      <div class="w-full max-w-sm rounded-xl border p-6 space-y-4
+      <div class="w-full sm:max-w-sm rounded-xl border p-6 space-y-4
                   dark:border-border dark:bg-surface-elevated
                   border-slate-200 bg-white">
         <!-- Title -->

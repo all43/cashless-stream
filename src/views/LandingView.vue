@@ -100,13 +100,13 @@ const concepts = [
         </div>
 
         <!-- Main headline -->
-        <h1 class="text-4xl md:text-6xl font-bold tracking-tight leading-tight
+        <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight leading-tight
                     dark:text-text-primary text-slate-900">
           Money doesn't arrive.<br />
           <span class="text-income">It flows.</span>
         </h1>
 
-        <p class="mt-6 text-lg md:text-xl max-w-2xl mx-auto dark:text-text-secondary text-slate-500">
+        <p class="mt-6 text-base md:text-xl max-w-2xl mx-auto dark:text-text-secondary text-slate-500">
           What if we replaced discrete payments with continuous streams?
           Your salary, rent, and even your smartphone — all flowing in real time.
         </p>
