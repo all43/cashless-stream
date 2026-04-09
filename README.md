@@ -2,6 +2,8 @@
 
 > What if money never arrived — it just flowed?
 
+**[→ Live demo](https://cashless-stream.pages.dev)**
+
 A concept demo exploring what a world of **continuous money streams** could look like. Instead of discrete payments — a salary deposited once a month, rent debited on the 1st, a loan repaid in instalments — imagine every financial obligation as a per-second stream, always running, always balanced.
 
 This is a revival of an idea I first sketched out around 2018. Built as a portfolio piece; no backend, no accounts, nothing stored remotely.
@@ -64,6 +66,16 @@ Products priced as monthly subscriptions over their expected lifetime. Browse by
 ---
 
 The thinking behind all of this is in [PHILOSOPHY.md](./PHILOSOPHY.md).
+
+---
+
+## Screenshots
+
+![Landing](docs/screenshots/landing.png)
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+![Marketplace](docs/screenshots/marketplace.png)
 
 ---
 
