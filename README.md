@@ -103,3 +103,9 @@ npm run dev      # dev server at localhost:5173
 npm run build    # production build to dist/
 npm run preview  # preview production build
 ```
+
+---
+
+## License
+
+MIT © 2025 Evgenii Malikov
