@@ -23,7 +23,7 @@ export const useStreamStore = defineStore(
     const account = ref<Account>({ ...defaultAccount, streams: [...defaultAccount.streams] })
     const selectedPeriod = ref<Period>('monthly')
     const showProjections = ref(true)
-    const showVisualization = ref(false)
+    const showVisualization = ref(true)
 
     const incomeStreams = computed(() =>
       account.value.streams.filter(
