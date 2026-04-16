@@ -1,0 +1,17 @@
+name = "cashless-stream"
+pages_build_output_dir = "dist"
+main = "src/index.ts"
+
+[build]
+command = "npm run build"
+cwd = "./"
+
+[build.watch_paths]
+paths = ["src/**/*.vue", "src/**/*.ts", "src/**/*.tsx", "public/**/*"]
+
+[env.production]
+name = "cashless-stream"
+routes = [
+  { pattern = "demo.cashless.stream", zone_name = "cashless.stream" },
+  { pattern = "cashless-stream.pages.dev" }
+]
